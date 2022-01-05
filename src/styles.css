@@ -21,7 +21,6 @@ body {
 .game {
   display: flex;
   flex-direction: column;
-
   height: 100%;
   width: 100%;
   max-width: 480px;
@@ -50,6 +49,7 @@ body {
   justify-content: center;
   font-size: 2em;
   font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
 .keyboard {
@@ -76,6 +76,7 @@ button {
   height: 60px;
   flex: 1;
   margin: 3px;
+  transition: background-color 0.2s ease;
 }
 
 button:active {
