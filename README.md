@@ -1,2 +1,1 @@
-# wordle-clone
-Created with CodeSandbox
+# Werdle
