@@ -140,3 +140,7 @@ button:active {
 .modal h3 {
   margin: 0 0 1em 0;
 }
+
+.modal strong {
+  text-transform: uppercase;
+}
