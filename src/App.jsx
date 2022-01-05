@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import Keyboard from './Keyboard';
-import Row from './Row';
-import './styles.css';
-import { calculateKeyboardState, padEnd } from './util';
-import { all, selected } from './words';
+import { useCallback, useEffect, useRef, useState } from "react";
+import Keyboard from "./Keyboard";
+import Row from "./Row";
+import "./styles.css";
+import { calculateKeyboardState, padEnd } from "./util";
+import { all, selected } from "./words";
 
 const pickRandomAnswer = () =>
   selected[Math.floor(Math.random() * selected.length)];
@@ -11,7 +11,7 @@ const pickRandomAnswer = () =>
 export default function App() {
   const [answer, setAnswer] = useState(pickRandomAnswer());
   const [guesses, setGuesses] = useState([]);
-  const [current, setCurrent] = useState('');
+  const [current, setCurrent] = useState("");
   const [gameOver, setGameOver] = useState(false);
 
   const [message, setMessage] = useState(null);
@@ -29,37 +29,37 @@ export default function App() {
     setGameOver(false);
     setAnswer(pickRandomAnswer());
     setGuesses([]);
-    setCurrent('');
+    setCurrent("");
   };
 
   const submit = useCallback(() => {
     if (guesses.length > 5) return;
     if (all.indexOf(current) === -1) {
-      return showMessage('Invalid word');
+      return showMessage("Invalid word");
     }
     setGuesses([...guesses, current]);
-    setCurrent('');
-    if (guesses.length === 4 || current === answer) {
+    setCurrent("");
+    if (guesses.length === 5 || current === answer) {
       setTimeout(() => setGameOver(true), 500);
     }
   }, [current, guesses, answer]);
 
   const keyPressed = useCallback(
     (key) => {
-      if (key === 'enter') {
+      if (key === "enter") {
         if (current.length < 5) {
-          return showMessage('Enter 5 letters');
+          return showMessage("Enter 5 letters");
         }
 
         return submit();
       }
 
-      if (key === 'backspace') {
+      if (key === "backspace") {
         return setCurrent(current.substring(0, current.length - 1));
       }
 
       if (key.match(/^[a-z]{1}$/i)) {
-        if (current.length >= 5) return;
+        if (current.length >= 6) return;
         setCurrent(current + key);
       }
     },
@@ -68,18 +68,19 @@ export default function App() {
 
   useEffect(() => {
     const keyDown = (e) => keyPressed(e.key.toLowerCase());
-    document.addEventListener('keydown', keyDown);
-    return () => document.removeEventListener('keydown', keyDown);
+    document.addEventListener("keydown", keyDown);
+    return () => document.removeEventListener("keydown", keyDown);
   }, [keyPressed]);
 
-  const rows = padEnd([...guesses, current], 6, '').slice(0, 5);
+  const rows = padEnd([...guesses, current], 6, "").slice(0, 6);
 
   const keyboardState = calculateKeyboardState(guesses, answer);
 
-  const height = ((Math.min(window.innerWidth, 480) - 62) / 5) * 6;
+  const boxWidth = (Math.min(window.innerWidth, 480) - 62) / 5;
+  const height = boxWidth * 6 + 30;
 
   const hasWon = guesses[guesses.length - 1] === answer;
-  console.log(answer);
+
   return (
     <div className="game">
       {message && <div className="message">{message}</div>}
