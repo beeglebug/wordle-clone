@@ -59,7 +59,7 @@ export default function App() {
       }
 
       if (key.match(/^[a-z]{1}$/i)) {
-        if (current.length >= 6) return;
+        if (current.length >= 5) return;
         setCurrent(current + key);
       }
     },
